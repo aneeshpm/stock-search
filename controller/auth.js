@@ -54,7 +54,7 @@ exports.loginController = async function (req, res) {
     );
     if (!validPass) return res.status(400).send("invalid password");
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    res.header("auth-token", token).send(token);
+    res.header("auth-token", token).send({ token: token });
   } catch (e) {
     console.log(e);
   }
