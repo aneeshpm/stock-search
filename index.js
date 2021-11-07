@@ -1,14 +1,13 @@
 const express = require("express");
 const app = express();
-const client = require("./database");
 const cors = require("cors");
-// import route
-const authRoute = require("./routes/auth");
-// const postRoute = require("./routes/posts");
+
+// cors
 const whitelist = [
   "http://localhost:8000",
   "https://stock-detail.herokuapp.com",
 ];
+
 const corsOptions = {
   origin: function (origin, callback) {
     console.log("** Origin of request " + origin);
@@ -23,9 +22,12 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+// import route
+const authRoute = require("./routes/auth");
+const homeRoute = require("./routes/home");
 // route middleware
 app.use("/api/user", authRoute);
-// app.use("/api/home", postRoute);
+app.use("/api/home", homeRoute);
 
 app.listen(process.env.PORT || 8000, () =>
   console.log("Server is Up and running")
